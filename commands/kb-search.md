@@ -1,7 +1,7 @@
 ---
 description: Search the shared knowledge base for relevant documentation
 argument-hint: <query>
-allowed-tools: [mcp__plugin_knowledge-base_knowledge-base__search_knowledge, mcp__plugin_knowledge-base_knowledge-base__read_document]
+allowed-tools: [mcp__knowledge-base__search_knowledge, mcp__knowledge-base__read_document]
 ---
 
 # Knowledge Base Search
