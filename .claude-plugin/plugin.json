@@ -1,0 +1,8 @@
+{
+  "name": "knowledge-base",
+  "version": "1.0.0",
+  "description": "Shared knowledge base backed by AWS S3 and Amazon Bedrock Knowledge Bases for semantic search across team documentation",
+  "author": {
+    "name": "Co-founders"
+  }
+}
