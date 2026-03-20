@@ -94,11 +94,11 @@ export async function listObjects(
     );
 
     for (const obj of response.Contents || []) {
-      if (obj.Key) {
+      if (obj.Key && obj.Size && obj.Size > 0) {
         items.push({
           key: obj.Key.replace(config.s3Prefix, ""),
           lastModified: obj.LastModified?.toISOString() || "unknown",
-          size: obj.Size || 0,
+          size: obj.Size,
         });
       }
     }
