@@ -1,6 +1,6 @@
-# Surfacer Knowledge Base Plugin
+# Lore — Shared Knowledge Base
 
-This is the Claude Code MCP plugin for Surfacer's shared knowledge base, backed by AWS S3 and Amazon Bedrock.
+A Claude Code plugin that gives Claude a persistent, searchable memory backed by AWS S3 and Amazon Bedrock. Your team's knowledge grows with every session.
 
 ## Proactive Documentation
 

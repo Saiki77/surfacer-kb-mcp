@@ -1,8 +1,8 @@
 {
-  "name": "knowledge-base",
+  "name": "lore",
   "version": "1.0.0",
-  "description": "Shared knowledge base backed by AWS S3 and Amazon Bedrock Knowledge Bases for semantic search across team documentation",
+  "description": "Lore — A shared knowledge base for Claude, backed by AWS S3 with semantic search via Amazon Bedrock. Your team's knowledge grows with every session.",
   "author": {
-    "name": "Co-founders"
+    "name": "Lore Contributors"
   }
 }

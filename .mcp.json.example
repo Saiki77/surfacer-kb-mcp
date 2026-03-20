@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "lore": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "env": {
+        "KB_S3_BUCKET": "your-bucket-name",
+        "KB_BEDROCK_KB_ID": "",
+        "KB_AWS_PROFILE": "default",
+        "KB_AWS_REGION": "us-east-1",
+        "KB_S3_PREFIX": "knowledge-base/",
+        "KB_USER_NAME": "your-name",
+        "KB_DATA_SOURCE_ID": "",
+        "KB_BEDROCK_ROLE_ARN": ""
+      }
+    }
+  }
+}

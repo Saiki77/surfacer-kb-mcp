@@ -51,7 +51,7 @@ try {
 
 const server = new Server(
   {
-    name: "knowledge-base",
+    name: "lore",
     version: "1.0.0",
   },
   {

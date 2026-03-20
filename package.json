@@ -1,5 +1,5 @@
 {
-  "name": "knowledge-base-mcp-server",
+  "name": "lore-mcp",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",

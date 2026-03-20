@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Knowledge Base Plugin - Registration & Setup Script
+# Lore Plugin - Registration & Setup Script
 # Run this once after cloning to configure AWS credentials and register
 # the plugin with Claude Code.
 
@@ -12,7 +12,7 @@ SETTINGS_FILE="$CLAUDE_DIR/settings.json"
 AWS_CREDS_FILE="$HOME/.aws/credentials"
 PROFILE="${KB_AWS_PROFILE:-default}"
 
-echo "=== Knowledge Base Plugin Setup ==="
+echo "=== Lore Plugin Setup ==="
 echo ""
 echo "Plugin directory: $PLUGIN_DIR"
 echo ""
@@ -77,10 +77,10 @@ echo "--- Step 3: Testing AWS Connection ---"
 echo ""
 
 # Source env from .mcp.json for the test
-export KB_S3_BUCKET="${KB_S3_BUCKET:-claude-unified-bucket}"
-export KB_AWS_REGION="${KB_AWS_REGION:-eu-central-1}"
+export KB_S3_BUCKET="${KB_S3_BUCKET:-}"
+export KB_AWS_REGION="${KB_AWS_REGION:-us-east-1}"
 export KB_AWS_PROFILE="$PROFILE"
-export KB_S3_PREFIX="${KB_S3_PREFIX:-knowledge-base/}"
+export KB_S3_PREFIX="${KB_S3_PREFIX:-lore/}"
 
 if npx tsx "$PLUGIN_DIR/scripts/test-connection.ts"; then
   echo ""
@@ -107,7 +107,7 @@ node -e "
   const path = '$PLUGINS_FILE';
   let data = { version: 2, plugins: {} };
   try { data = JSON.parse(fs.readFileSync(path, 'utf8')); } catch {}
-  data.plugins['knowledge-base@local'] = [{
+  data.plugins['lore@local'] = [{
     scope: 'user',
     installPath: '$PLUGIN_DIR',
     version: '1.0.0',
@@ -125,13 +125,13 @@ node -e "
   let data = {};
   try { data = JSON.parse(fs.readFileSync(path, 'utf8')); } catch {}
   if (!data.enabledPlugins) data.enabledPlugins = {};
-  data.enabledPlugins['knowledge-base@local'] = true;
+  data.enabledPlugins['lore@local'] = true;
   fs.writeFileSync(path, JSON.stringify(data, null, 2) + '\n');
   console.log('  Updated: ' + path);
 "
 
 # Generate install manifest with file hashes
-MANIFEST_FILE="$CLAUDE_DIR/plugins/.install-manifests/knowledge-base@local.json"
+MANIFEST_FILE="$CLAUDE_DIR/plugins/.install-manifests/lore@local.json"
 node -e "
   const fs = require('fs');
   const path = require('path');
@@ -144,7 +144,7 @@ node -e "
   const pluginFiles = [
     '.claude-plugin/plugin.json',
     '.mcp.json',
-    'skills/knowledge-base-advisor/SKILL.md',
+    'skills/lore-advisor/SKILL.md',
     'commands/kb-search.md',
     'commands/kb-sync.md'
   ];
@@ -160,7 +160,7 @@ node -e "
   }
 
   const manifest = {
-    pluginId: 'knowledge-base@local',
+    pluginId: 'lore@local',
     createdAt: new Date().toISOString(),
     files
   };
@@ -175,5 +175,5 @@ echo ""
 echo "Restart Claude Code to activate the plugin."
 echo "You should then see:"
 echo "  - Skill: knowledge-base-advisor"
-echo "  - Commands: /kb-search, /kb-sync"
+echo "  - Commands: /kb-search, /kb-sync, /handoff"
 echo "  - Tools: search_knowledge, read_document, write_document, etc."
