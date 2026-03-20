@@ -11,6 +11,16 @@ import * as readDocument from "./tools/read-document.js";
 import * as writeDocument from "./tools/write-document.js";
 import * as listDocuments from "./tools/list-documents.js";
 import * as deleteDocument from "./tools/delete-document.js";
+import * as getContext from "./tools/get-context.js";
+import * as processDocument from "./tools/process-document.js";
+import * as createHandoff from "./tools/create-handoff.js";
+import * as listHandoffs from "./tools/list-handoffs.js";
+import * as claimHandoff from "./tools/claim-handoff.js";
+import * as completeHandoff from "./tools/complete-handoff.js";
+import * as updatePresence from "./tools/update-presence.js";
+import * as getPresence from "./tools/get-presence.js";
+import * as setupBedrock from "./tools/setup-bedrock.js";
+import * as syncBedrock from "./tools/sync-bedrock.js";
 
 const tools = [
   searchKnowledge,
@@ -18,6 +28,16 @@ const tools = [
   writeDocument,
   listDocuments,
   deleteDocument,
+  getContext,
+  processDocument,
+  createHandoff,
+  listHandoffs,
+  claimHandoff,
+  completeHandoff,
+  updatePresence,
+  getPresence,
+  setupBedrock,
+  syncBedrock,
 ];
 
 let config: Config;
@@ -63,6 +83,16 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     write_document: writeDocument.execute,
     list_documents: listDocuments.execute,
     delete_document: deleteDocument.execute,
+    get_kb_context: getContext.execute,
+    process_document: processDocument.execute,
+    create_handoff: createHandoff.execute,
+    list_handoffs: listHandoffs.execute,
+    claim_handoff: claimHandoff.execute,
+    complete_handoff: completeHandoff.execute,
+    update_presence: updatePresence.execute,
+    get_presence: getPresence.execute,
+    setup_bedrock_kb: setupBedrock.execute,
+    sync_bedrock: syncBedrock.execute,
   };
 
   const handler = toolMap[name];

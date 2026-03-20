@@ -40,7 +40,8 @@ export async function putObject(
   config: Config,
   key: string,
   body: string,
-  metadata: Record<string, string>
+  metadata: Record<string, string>,
+  contentType: string = "text/markdown"
 ): Promise<void> {
   const s3 = getClient(config);
   await s3.send(
@@ -48,7 +49,7 @@ export async function putObject(
       Bucket: config.s3Bucket,
       Key: config.s3Prefix + key,
       Body: body,
-      ContentType: "text/markdown",
+      ContentType: contentType,
       Metadata: metadata,
     })
   );

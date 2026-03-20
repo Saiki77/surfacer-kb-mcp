@@ -5,6 +5,8 @@ export interface DocumentMetadata {
   modified?: string;
   tags?: string[];
   category?: string;
+  relatedDocuments?: string[];
+  aiProcessed?: string;
 }
 
 export function parseFrontmatter(content: string): {
@@ -49,6 +51,17 @@ export function parseFrontmatter(content: string): {
             .map((t) => t.trim());
         }
         break;
+      case "relatedDocuments":
+        if (value.startsWith("[") && value.endsWith("]")) {
+          metadata.relatedDocuments = value
+            .slice(1, -1)
+            .split(",")
+            .map((t) => t.trim());
+        }
+        break;
+      case "aiProcessed":
+        metadata.aiProcessed = value;
+        break;
     }
   }
 
@@ -65,6 +78,10 @@ export function generateFrontmatter(metadata: DocumentMetadata): string {
     lines.push(`tags: [${metadata.tags.join(", ")}]`);
   }
   if (metadata.category) lines.push(`category: ${metadata.category}`);
+  if (metadata.relatedDocuments && metadata.relatedDocuments.length > 0) {
+    lines.push(`relatedDocuments: [${metadata.relatedDocuments.join(", ")}]`);
+  }
+  if (metadata.aiProcessed) lines.push(`aiProcessed: ${metadata.aiProcessed}`);
   lines.push("---");
   return lines.join("\n");
 }
@@ -86,6 +103,9 @@ export function metadataToS3Headers(
   if (metadata.modified) headers["modified"] = metadata.modified;
   if (metadata.tags) headers["tags"] = metadata.tags.join(",");
   if (metadata.category) headers["category"] = metadata.category;
+  if (metadata.relatedDocuments)
+    headers["relateddocuments"] = metadata.relatedDocuments.join(",");
+  if (metadata.aiProcessed) headers["aiprocessed"] = metadata.aiProcessed;
   return headers;
 }
 
@@ -98,5 +118,8 @@ export function s3HeadersToMetadata(
   if (headers["modified"]) metadata.modified = headers["modified"];
   if (headers["tags"]) metadata.tags = headers["tags"].split(",");
   if (headers["category"]) metadata.category = headers["category"];
+  if (headers["relateddocuments"])
+    metadata.relatedDocuments = headers["relateddocuments"].split(",");
+  if (headers["aiprocessed"]) metadata.aiProcessed = headers["aiprocessed"];
   return metadata;
 }

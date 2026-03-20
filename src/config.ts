@@ -4,6 +4,9 @@ export interface Config {
   awsProfile: string;
   awsRegion: string;
   s3Prefix: string;
+  userName: string | null;
+  dataSourceId: string | null;
+  bedrockRoleArn: string | null;
 }
 
 export function loadConfig(): Config {
@@ -20,5 +23,8 @@ export function loadConfig(): Config {
     awsProfile: process.env.KB_AWS_PROFILE || "default",
     awsRegion: process.env.KB_AWS_REGION || "eu-central-1",
     s3Prefix: process.env.KB_S3_PREFIX || "knowledge-base/",
+    userName: process.env.KB_USER_NAME || null,
+    dataSourceId: process.env.KB_DATA_SOURCE_ID || null,
+    bedrockRoleArn: process.env.KB_BEDROCK_ROLE_ARN || null,
   };
 }

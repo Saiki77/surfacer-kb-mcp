@@ -20,6 +20,7 @@ cp -R "$PLUGIN_SRC/.claude-plugin" "$CACHE_DIR/"
 cp -R "$PLUGIN_SRC/dist" "$CACHE_DIR/"
 cp -R "$PLUGIN_SRC/skills" "$CACHE_DIR/"
 cp -R "$PLUGIN_SRC/commands" "$CACHE_DIR/"
+cp -R "$PLUGIN_SRC/hooks" "$CACHE_DIR/"
 cp -R "$PLUGIN_SRC/node_modules" "$CACHE_DIR/"
 cp "$PLUGIN_SRC/package.json" "$CACHE_DIR/"
 cp "$PLUGIN_SRC/tsconfig.json" "$CACHE_DIR/"
@@ -36,7 +37,10 @@ cat > "$CACHE_DIR/.mcp.json" << 'EOF'
         "KB_BEDROCK_KB_ID": "",
         "KB_AWS_PROFILE": "default",
         "KB_AWS_REGION": "eu-central-1",
-        "KB_S3_PREFIX": "knowledge-base/"
+        "KB_S3_PREFIX": "knowledge-base/",
+        "KB_USER_NAME": "",
+        "KB_DATA_SOURCE_ID": "",
+        "KB_BEDROCK_ROLE_ARN": ""
       }
     }
   }
@@ -91,7 +95,10 @@ config['mcpServers']['knowledge-base'] = {
         'KB_BEDROCK_KB_ID': '',
         'KB_AWS_PROFILE': 'default',
         'KB_AWS_REGION': 'eu-central-1',
-        'KB_S3_PREFIX': 'knowledge-base/'
+        'KB_S3_PREFIX': 'knowledge-base/',
+        'KB_USER_NAME': '',
+        'KB_DATA_SOURCE_ID': '',
+        'KB_BEDROCK_ROLE_ARN': ''
     }
 }
 with open('$DESKTOP_CONFIG', 'w') as f:
