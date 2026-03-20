@@ -1,6 +1,7 @@
 ---
 name: handoff
 description: View and claim session hand-offs from team members
+allowed-tools: [mcp__surfacer-kb__list_handoffs, mcp__surfacer-kb__claim_handoff, mcp__surfacer-kb__create_handoff, mcp__surfacer-kb__complete_handoff, mcp__surfacer-kb__update_presence, mcp__surfacer-kb__read_document]
 ---
 
 # Hand-Off Command

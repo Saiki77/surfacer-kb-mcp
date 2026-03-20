@@ -1,6 +1,6 @@
 ---
 description: Trigger a sync of the Bedrock Knowledge Base to index new/updated documents
-allowed-tools: [Bash]
+allowed-tools: [Bash, mcp__surfacer-kb__sync_bedrock]
 ---
 
 # Knowledge Base Sync
