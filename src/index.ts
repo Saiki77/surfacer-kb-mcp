@@ -51,7 +51,7 @@ try {
 
 const server = new Server(
   {
-    name: "lore",
+    name: "surfacer-kb",
     version: "1.0.0",
   },
   {

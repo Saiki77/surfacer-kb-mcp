@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "lore": {
+    "surfacer-kb": {
       "command": "node",
       "args": ["dist/index.js"],
       "env": {

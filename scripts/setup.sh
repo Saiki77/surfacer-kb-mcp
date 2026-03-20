@@ -2,10 +2,10 @@
 set -euo pipefail
 
 # ╔══════════════════════════════════════════════════════╗
-# ║  Lore — One-command setup for new team members      ║
+# ║  Surfacer KB — One-command setup for new team members║
 # ║                                                      ║
 # ║  Usage:                                              ║
-# ║    git clone <repo> && cd lore-mcp                   ║
+# ║    git clone <repo> && cd surfacer-kb-mcp            ║
 # ║    bash scripts/setup.sh                             ║
 # ║                                                      ║
 # ║  What it does:                                       ║
@@ -14,7 +14,8 @@ set -euo pipefail
 # ║    3. Registers it with Claude Code                  ║
 # ║    4. (Optional) Sets up Bedrock semantic search     ║
 # ║                                                      ║
-# ║  After running, restart Claude Code — Lore appears.  ║
+# ║  After running, restart Claude Code — Surfacer KB    ║
+# ║  appears.                                            ║
 # ╚══════════════════════════════════════════════════════╝
 
 PLUGIN_DIR="$(cd "$(dirname "$0")/.." && pwd)"
@@ -43,9 +44,9 @@ ask_default() {
 }
 
 echo -e "${BOLD}"
-echo "  ╦  ╔═╗╦═╗╔═╗"
-echo "  ║  ║ ║╠╦╝║╣ "
-echo "  ╩═╝╚═╝╩╚═╚═╝"
+echo "  ╔═╗╦ ╦╦═╗╔═╗╔═╗╔═╗╔═╗╦═╗  ╦╔═╔╗ "
+echo "  ╚═╗║ ║╠╦╝╠╣ ╠═╣║  ║╣ ╠╦╝  ╠╩╗╠╩╗"
+echo "  ╚═╝╚═╝╩╚═╚  ╩ ╩╚═╝╚═╝╩╚═  ╩ ╩╚═╝"
 echo -e "${RESET}${DIM}  Shared knowledge for Claude${RESET}"
 echo ""
 
@@ -65,10 +66,10 @@ ok "Hello, $USER_NAME!"
 # Step 2: AWS Configuration
 # ─────────────────────────────────────────────────────
 step "AWS Configuration"
-echo -e "    ${DIM}Lore stores documents in S3. You need a bucket and AWS credentials.${RESET}"
+echo -e "    ${DIM}Surfacer Knowledge Base stores documents in S3. You need a bucket and AWS credentials.${RESET}"
 echo ""
 
-ask_default "S3 bucket name" S3_BUCKET "my-lore-bucket"
+ask_default "S3 bucket name" S3_BUCKET "my-surfacer-kb-bucket"
 ask_default "S3 key prefix" S3_PREFIX "knowledge-base/"
 ask_default "AWS region" AWS_REGION "us-east-1"
 
@@ -85,7 +86,7 @@ if [ "$AUTH_CHOICE" = "2" ]; then
   ask "AWS Access Key ID" AWS_ACCESS_KEY
   ask_secret "AWS Secret Access Key" AWS_SECRET_KEY
 
-  ask_default "Save as AWS profile name" AWS_PROFILE "lore"
+  ask_default "Save as AWS profile name" AWS_PROFILE "surfacer-kb"
 
   mkdir -p "$HOME/.aws"
   CREDS_FILE="$HOME/.aws/credentials"
@@ -125,7 +126,7 @@ step "Writing configuration"
 cat > "$MCP_JSON" << EOF
 {
   "mcpServers": {
-    "lore": {
+    "surfacer-kb": {
       "command": "node",
       "args": ["dist/index.js"],
       "env": {
@@ -190,7 +191,7 @@ fi
 step "Registering with Claude Code"
 
 # Deploy to plugin cache
-CACHE_DIR="$HOME/.claude/plugins/cache/lore-plugins/lore/1.0.0"
+CACHE_DIR="$HOME/.claude/plugins/cache/surfacer-kb-plugins/surfacer-kb/1.0.0"
 rm -rf "$CACHE_DIR"
 mkdir -p "$CACHE_DIR"
 
@@ -204,7 +205,7 @@ cp "$PLUGIN_DIR/tsconfig.json" "$CACHE_DIR/"
 cat > "$CACHE_DIR/.mcp.json" << EOF
 {
   "mcpServers": {
-    "lore": {
+    "surfacer-kb": {
       "command": "node",
       "args": ["$CACHE_DIR/dist/index.js"],
       "env": {
@@ -239,11 +240,11 @@ for root, dirs, filenames in os.walk(base):
                 files[rel] = hashlib.sha256(fh.read()).hexdigest()
         except: pass
 manifest = {
-    'pluginId': 'lore@lore-plugins',
+    'pluginId': 'surfacer-kb@surfacer-kb-plugins',
     'createdAt': '$(date -u +%Y-%m-%dT%H:%M:%S.000Z)',
     'files': dict(sorted(files.items()))
 }
-out = os.path.expanduser('~/.claude/plugins/.install-manifests/lore@lore-plugins.json')
+out = os.path.expanduser('~/.claude/plugins/.install-manifests/surfacer-kb@surfacer-kb-plugins.json')
 with open(out, 'w') as f:
     json.dump(manifest, f, indent=2)
 print(f'{len(files)} files registered')
@@ -257,7 +258,7 @@ node -e "
   const path = '$CLAUDE_DIR/plugins/installed_plugins.json';
   let data = { version: 2, plugins: {} };
   try { data = JSON.parse(fs.readFileSync(path, 'utf8')); } catch {}
-  data.plugins['lore@lore-plugins'] = [{
+  data.plugins['surfacer-kb@surfacer-kb-plugins'] = [{
     scope: 'user',
     installPath: '$CACHE_DIR',
     version: '1.0.0',
@@ -275,7 +276,7 @@ node -e "
   let data = {};
   try { data = JSON.parse(fs.readFileSync(path, 'utf8')); } catch {}
   if (!data.enabledPlugins) data.enabledPlugins = {};
-  data.enabledPlugins['lore@lore-plugins'] = true;
+  data.enabledPlugins['surfacer-kb@surfacer-kb-plugins'] = true;
   fs.writeFileSync(path, JSON.stringify(data, null, 2) + '\n');
 "
 ok "Enabled in settings.json"
@@ -287,7 +288,7 @@ if [ -f "$DESKTOP_CONFIG" ]; then
 import json
 config = json.load(open('$DESKTOP_CONFIG'))
 config.setdefault('mcpServers', {})
-config['mcpServers']['lore'] = {
+config['mcpServers']['surfacer-kb'] = {
     'command': 'node',
     'args': ['$CACHE_DIR/dist/index.js'],
     'env': {
@@ -311,7 +312,7 @@ fi
 # ─────────────────────────────────────────────────────
 echo ""
 echo -e "    ${DIM}Bedrock enables semantic search (\"find docs about X\").${RESET}"
-echo -e "    ${DIM}Without it, Lore still works — you can list, read, and write docs.${RESET}"
+echo -e "    ${DIM}Without it, Surfacer Knowledge Base still works — you can list, read, and write docs.${RESET}"
 read -rp "    Set up Bedrock semantic search now? (y/N): " SETUP_BEDROCK
 
 if [[ "$SETUP_BEDROCK" =~ ^[Yy]$ ]]; then
@@ -320,7 +321,7 @@ if [[ "$SETUP_BEDROCK" =~ ^[Yy]$ ]]; then
   echo -e "    ${DIM}You need an IAM role ARN that Bedrock can assume to read S3.${RESET}"
   echo ""
   echo -e "    ${DIM}If you don't have one, you can create it later by asking Claude:${RESET}"
-  echo -e "    ${DIM}  \"Set up Bedrock KB for Lore\" — it will use the setup_bedrock_kb tool${RESET}"
+  echo -e "    ${DIM}  \"Set up Bedrock KB for Surfacer Knowledge Base\" — it will use the setup_bedrock_kb tool${RESET}"
   echo ""
   ask "Bedrock IAM role ARN (or press Enter to skip)" BEDROCK_ROLE_ARN
 
@@ -364,7 +365,7 @@ echo -e "     Or use: ${DIM}/kb-search architecture${RESET}"
 echo ""
 if [[ ! "$SETUP_BEDROCK" =~ ^[Yy]$ ]]; then
 echo -e "  3. ${BOLD}Optional: Enable semantic search${RESET}"
-echo -e "     Ask Claude: ${DIM}\"Set up Bedrock KB for Lore\"${RESET}"
+echo -e "     Ask Claude: ${DIM}\"Set up Bedrock KB for Surfacer Knowledge Base\"${RESET}"
 echo ""
 fi
 echo -e "  ${DIM}Config: $MCP_JSON${RESET}"

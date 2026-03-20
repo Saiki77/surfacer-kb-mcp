@@ -1,4 +1,4 @@
-# Lore — Shared Knowledge Base
+# Surfacer Knowledge Base — Shared Knowledge Base
 
 A Claude Code plugin that gives Claude a persistent, searchable memory backed by AWS S3 and Amazon Bedrock. Your team's knowledge grows with every session.
 

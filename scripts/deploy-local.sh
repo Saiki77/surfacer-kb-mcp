@@ -1,11 +1,11 @@
 #!/bin/bash
-# Deploy the Lore plugin to the local Claude Code plugin cache.
+# Deploy the Surfacer Knowledge Base plugin to the local Claude Code plugin cache.
 # Run this after making changes, then restart Claude Code.
 
 set -euo pipefail
 
 PLUGIN_SRC="$(cd "$(dirname "$0")/.." && pwd)"
-CACHE_DIR="$HOME/.claude/plugins/cache/lore-plugins/lore/1.0.0"
+CACHE_DIR="$HOME/.claude/plugins/cache/surfacer-kb-plugins/surfacer-kb/1.0.0"
 
 echo "Building TypeScript..."
 cd "$PLUGIN_SRC"
@@ -50,7 +50,7 @@ fi
 cat > "$CACHE_DIR/.mcp.json" << EOF
 {
   "mcpServers": {
-    "lore": {
+    "surfacer-kb": {
       "command": "node",
       "args": ["$CACHE_DIR/dist/index.js"],
       "env": {
@@ -90,14 +90,14 @@ for root, dirs, filenames in os.walk(base):
             pass
 
 manifest = {
-    'pluginId': 'lore@lore-plugins',
+    'pluginId': 'surfacer-kb@surfacer-kb-plugins',
     'createdAt': '2026-03-20T10:00:00.000Z',
     'files': dict(sorted(files.items()))
 }
 
 manifest_dir = os.path.expanduser('~/.claude/plugins/.install-manifests')
 os.makedirs(manifest_dir, exist_ok=True)
-out = os.path.join(manifest_dir, 'lore@lore-plugins.json')
+out = os.path.join(manifest_dir, 'surfacer-kb@surfacer-kb-plugins.json')
 with open(out, 'w') as f:
     json.dump(manifest, f, indent=2)
 print(f'Manifest written: {len(files)} files')
@@ -110,9 +110,10 @@ if [ -f "$DESKTOP_CONFIG" ]; then
 import json
 config = json.load(open('$DESKTOP_CONFIG'))
 config['mcpServers'] = config.get('mcpServers', {})
-# Remove old key if present
+# Remove old keys if present
 config['mcpServers'].pop('knowledge-base', None)
-config['mcpServers']['lore'] = {
+config['mcpServers'].pop('lore', None)
+config['mcpServers']['surfacer-kb'] = {
     'command': 'node',
     'args': ['$CACHE_DIR/dist/index.js'],
     'env': {

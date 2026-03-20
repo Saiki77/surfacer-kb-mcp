@@ -1,4 +1,4 @@
-# Lore
+# Surfacer Knowledge Base
 
 A Claude Code plugin that gives Claude a persistent, searchable shared knowledge base backed by AWS S3 and Amazon Bedrock.
 
@@ -7,12 +7,12 @@ Your team's knowledge grows with every session. What one Claude session learns, 
 ## Quick Start
 
 ```bash
-git clone https://github.com/Saiki77/lore-mcp.git
-cd lore-mcp
+git clone https://github.com/Saiki77/surfacer-kb-mcp.git
+cd surfacer-kb-mcp
 bash scripts/setup.sh
 ```
 
-Restart Claude Code. That's it — Lore appears automatically.
+Restart Claude Code. That's it — Surfacer Knowledge Base appears automatically.
 
 ## What It Does
 
@@ -91,10 +91,10 @@ All config lives in `.mcp.json`:
 
 ## Semantic Search (Bedrock)
 
-Without Bedrock, Lore works as a document store — you can list, read, write, and organize docs. With Bedrock, you also get semantic search: "find docs about deployment" returns relevant results ranked by meaning.
+Without Bedrock, Surfacer Knowledge Base works as a document store — you can list, read, write, and organize docs. With Bedrock, you also get semantic search: "find docs about deployment" returns relevant results ranked by meaning.
 
 To set up Bedrock after initial install:
-1. Ask Claude: *"Set up Bedrock KB for Lore"*
+1. Ask Claude: *"Set up Bedrock KB for Surfacer Knowledge Base"*
 2. Provide an IAM role ARN with S3 read access and Bedrock trust
 3. Claude runs `setup_bedrock_kb` which creates the OpenSearch collection, KB, and data source
 4. Run `sync_bedrock` to index existing documents
@@ -108,7 +108,7 @@ There's a companion Obsidian plugin that syncs the KB to your vault with a 4-tab
 - **Handoffs** — Session hand-off management
 - **Activity** — GitHub-style sync activity feed
 
-See [lore-obsidian](https://github.com/Saiki77/lore-obsidian) for setup.
+See [surfacer-kb-obsidian](https://github.com/Saiki77/surfacer-kb-obsidian) for setup.
 
 ## Document Style
 

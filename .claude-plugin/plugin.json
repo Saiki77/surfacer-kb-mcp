@@ -1,8 +1,8 @@
 {
-  "name": "lore",
+  "name": "surfacer-kb",
   "version": "1.0.0",
-  "description": "Lore — A shared knowledge base for Claude, backed by AWS S3 with semantic search via Amazon Bedrock. Your team's knowledge grows with every session.",
+  "description": "Surfacer Knowledge Base — A shared knowledge base for Claude, backed by AWS S3 with semantic search via Amazon Bedrock. Your team's knowledge grows with every session.",
   "author": {
-    "name": "Lore Contributors"
+    "name": "Surfacer Knowledge Base Contributors"
   }
 }
