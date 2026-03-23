@@ -21,7 +21,7 @@ export function loadConfig(): Config {
     s3Bucket,
     bedrockKbId: process.env.KB_BEDROCK_KB_ID || null,
     awsProfile: process.env.KB_AWS_PROFILE || "default",
-    awsRegion: process.env.KB_AWS_REGION || "eu-central-1",
+    awsRegion: process.env.KB_AWS_REGION || "us-east-1",
     s3Prefix: process.env.KB_S3_PREFIX || "knowledge-base/",
     userName: process.env.KB_USER_NAME || null,
     dataSourceId: process.env.KB_DATA_SOURCE_ID || null,

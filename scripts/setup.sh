@@ -55,7 +55,7 @@ echo ""
 # ─────────────────────────────────────────────────────
 step "What's your name?"
 echo -e "    ${DIM}This shows up in presence tracking so teammates know who's active.${RESET}"
-ask "Your name (e.g. justus)" USER_NAME
+ask "Your name (e.g. alice)" USER_NAME
 
 if [ -z "$USER_NAME" ]; then
   fail "A name is required for team presence."

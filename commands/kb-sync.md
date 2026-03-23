@@ -13,7 +13,7 @@ Run the following AWS CLI command to start the sync:
 aws bedrock-agent start-ingestion-job \
   --knowledge-base-id "$KB_BEDROCK_KB_ID" \
   --data-source-id "$KB_DATA_SOURCE_ID" \
-  --region "${KB_AWS_REGION:-eu-central-1}" \
+  --region "${KB_AWS_REGION:-us-east-1}" \
   --profile "${KB_AWS_PROFILE:-default}"
 ```
 

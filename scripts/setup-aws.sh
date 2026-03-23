@@ -3,9 +3,8 @@ set -euo pipefail
 
 # Shared Knowledge Base - AWS Setup Script
 # Run this once to create the S3 bucket and Bedrock Knowledge Base.
-# Both co-founders share the same resources.
 
-REGION="${KB_AWS_REGION:-eu-central-1}"
+REGION="${KB_AWS_REGION:-us-east-1}"
 PROFILE="${KB_AWS_PROFILE:-default}"
 BUCKET_NAME="${KB_S3_BUCKET:-}"
 KB_PREFIX="${KB_S3_PREFIX:-knowledge-base/}"

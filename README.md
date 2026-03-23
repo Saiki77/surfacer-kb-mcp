@@ -74,6 +74,94 @@ The interactive wizard walks you through:
 3. `bash scripts/deploy-local.sh`
 4. Restart Claude Code
 
+## Updating
+
+After pulling new changes (or making local modifications), rebuild and redeploy:
+
+```bash
+git pull
+npm install
+bash scripts/deploy-local.sh
+```
+
+Then restart Claude Code. The deploy script rebuilds the TypeScript, copies everything to the plugin cache, and updates the Claude Desktop config — your `.mcp.json` settings are preserved.
+
+## AWS Setup
+
+Surfacer Knowledge Base needs an S3 bucket and an IAM user (or role) with access to it. Bedrock is optional but adds semantic search.
+
+### 1. Create an S3 bucket
+
+You can use the included setup script or create one manually:
+
+```bash
+# Using the setup script
+bash scripts/setup-aws.sh
+
+# Or manually via AWS CLI
+aws s3api create-bucket \
+  --bucket your-kb-bucket \
+  --region us-east-1
+```
+
+Enable versioning (recommended — protects against accidental overwrites):
+
+```bash
+aws s3api put-bucket-versioning \
+  --bucket your-kb-bucket \
+  --versioning-configuration Status=Enabled
+```
+
+### 2. IAM permissions
+
+Your AWS credentials need the following permissions on your bucket. A reference policy is in `scripts/iam-policy.json`:
+
+```json
+{
+  "Version": "2012-01-01",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject",
+        "s3:ListBucket",
+        "s3:HeadObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::your-kb-bucket",
+        "arn:aws:s3:::your-kb-bucket/*"
+      ]
+    }
+  ]
+}
+```
+
+If you plan to use Bedrock semantic search, also add:
+
+```json
+{
+  "Effect": "Allow",
+  "Action": [
+    "bedrock:Retrieve",
+    "bedrock:RetrieveAndGenerate"
+  ],
+  "Resource": "*"
+}
+```
+
+### 3. Configure credentials
+
+The plugin reads credentials via an AWS CLI profile. Set one up if you haven't:
+
+```bash
+aws configure --profile surfacer-kb
+# Enter your Access Key ID, Secret Access Key, and region
+```
+
+Then reference that profile name in your `.mcp.json` as `KB_AWS_PROFILE`.
+
 ## Configuration
 
 All config lives in `.mcp.json`:
@@ -101,14 +189,34 @@ To set up Bedrock after initial install:
 
 ## Obsidian Plugin
 
-There's a companion Obsidian plugin that syncs the KB to your vault with a 4-tab sidebar:
+There's a companion [Obsidian](https://obsidian.md) plugin that syncs the knowledge base into your vault, giving your team a visual interface alongside Claude's tools.
 
-- **Files** — Tree view of all KB documents
-- **Team** — Live presence cards (who's working on what)
-- **Handoffs** — Session hand-off management
-- **Activity** — GitHub-style sync activity feed
+### What it does
 
-See [surfacer-kb-obsidian](https://github.com/Saiki77/surfacer-kb-obsidian) for setup.
+- **Files** — Tree view of all KB documents, synced bidirectionally with S3
+- **Team** — Live presence cards showing who's active and what they're working on
+- **Handoffs** — Claim, manage, and complete session hand-offs from the sidebar
+- **Activity** — GitHub-style feed of sync events and document changes
+
+The Obsidian plugin and the Claude Code plugin share the same S3 bucket — edits from either side are visible to the other after a sync.
+
+### Install
+
+Install via [BRAT](https://github.com/TfTHacker/obsidian42-brat) (recommended):
+1. Install the BRAT community plugin in Obsidian
+2. Add `Saiki77/surfacer-kb-obsidian` as a beta plugin
+
+Or install manually from the [latest release](https://github.com/Saiki77/surfacer-kb-obsidian/releases/latest) — copy `main.js`, `manifest.json`, and `styles.css` into `.obsidian/plugins/kb-s3-sync/` in your vault.
+
+### Configure
+
+In Obsidian Settings > KB S3 Sync, set the same AWS credentials you used for the Claude Code plugin:
+- **S3 Bucket** — same as `KB_S3_BUCKET`
+- **AWS Region** — same as `KB_AWS_REGION`
+- **S3 Prefix** — same as `KB_S3_PREFIX`
+- **AWS Profile** or access keys — same credentials
+
+See [surfacer-kb-obsidian](https://github.com/Saiki77/surfacer-kb-obsidian) for full documentation.
 
 ## Document Style
 

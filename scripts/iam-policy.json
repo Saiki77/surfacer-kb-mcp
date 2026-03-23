@@ -11,8 +11,8 @@
         "s3:HeadObject"
       ],
       "Resource": [
-        "arn:aws:s3:::claude-unified-bucket",
-        "arn:aws:s3:::claude-unified-bucket/*"
+        "arn:aws:s3:::your-kb-bucket",
+        "arn:aws:s3:::your-kb-bucket/*"
       ]
     },
     {
