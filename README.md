@@ -129,5 +129,4 @@ bash scripts/deploy-local.sh  # Deploy changes to Claude Code
 After deploying, restart Claude Code to load the updated plugin.
 
 ## License
-
-MIT
+Creative Commons Attribution-NonCommercial 4.0 International
