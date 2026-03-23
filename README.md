@@ -40,10 +40,21 @@ Restart Claude Code. That's it — Surfacer Knowledge Base appears automatically
 
 ### Skills
 
-- **`/kb-search`** — Quick knowledge base search
-- **`/kb-sync`** — Trigger Bedrock re-indexing
-- **`/handoff`** — View and claim session hand-offs
-- **Knowledge Base Advisor** — Proactively loads relevant KB context when you start working on a topic
+| Skill | Description |
+|-------|-------------|
+| **Knowledge Base Advisor** | Proactively loads relevant KB context when you start working on a topic |
+| `/kb-search` | Quick semantic search across the knowledge base |
+| `/kb-sync` | Trigger Bedrock re-indexing after document changes |
+| `/handoff` | View and claim session hand-offs from teammates |
+| `/explain` | Explain a concept or decision using KB context |
+| `/doc-review` | Review a KB document for quality, accuracy, and freshness |
+| `/onboard` | Generate a personalized onboarding reading list for new team members |
+| `/kb-health` | Health report — document counts, staleness, gaps, and recommendations |
+| `/grow` | Automatically improve the KB: fix stale docs, add cross-references, fill gaps |
+| `/process-kb` | Normalize formatting, auto-categorize, and add cross-reference links |
+| `/log-session` | Capture decisions and context from the current session into the KB |
+| `/session-summary` | Summarize what was done and offer to create a hand-off |
+| `/todos` | Track team deadlines and action items via the KB |
 
 ## Prerequisites
 
