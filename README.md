@@ -87,15 +87,11 @@ The interactive wizard walks you through:
 
 ## Updating
 
-After pulling new changes (or making local modifications), rebuild and redeploy:
-
 ```bash
-git pull
-npm install
-bash scripts/deploy-local.sh
+bash scripts/update.sh
 ```
 
-Then restart Claude Code. The deploy script rebuilds the TypeScript, copies everything to the plugin cache, and updates the Claude Desktop config — your `.mcp.json` settings are preserved.
+Pulls the latest changes, rebuilds, and redeploys. Your `.mcp.json` config (bucket, credentials, etc.) is preserved — you won't be asked to re-enter anything. Restart Claude Code after updating.
 
 ## AWS Setup
 
